@@ -34,11 +34,11 @@ module.exports.getAllIdProduct = (req, res) => {
 };
 
 module.exports.createProduct = (req, res) => {
-  let { name, discription, quantity, price, categories, image } = req.body;
+  let { name, discription, quantity, importPrice, sellPrice, categories, image } = req.body;
   let id = Math.floor(Math.random() * 999999);
-  if (!name || !discription || !quantity || !price || !categories || !image) {
+  if (!name || !discription || !quantity || !importPrice || !sellPrice || !categories || !image) {
     res.status(500).json({
-      message: "Invail name or discription or quantity or price or categories or image",
+      message: "Invail name or discription or quantity or importPrice or sellPrice or categories or image",
     });
   }
   db.execute("SELECT * FROM tbl_product WHERE name=?", [name])
@@ -47,12 +47,13 @@ module.exports.createProduct = (req, res) => {
       if (rows.length > 0) {
         return Promise.reject("Name product already exist ");
       } else {
-        return db.execute("INSERT INTO tbl_product VALUES(?,?,?,?,?,?,?)", [
+        return db.execute("INSERT INTO tbl_product VALUES(?,?,?,?,?,?,?,?)", [
           id,
           name,
           discription,
           quantity,
-          price,
+          importPrice,
+          sellPrice,
           categories,
           image
         ]);
@@ -70,9 +71,12 @@ module.exports.createProduct = (req, res) => {
     });
 };
 
+
+
+
 module.exports.updateProduct = (req, res) => {
   let { id } = req.params;
-  let { name, discription, quantity, price, categories, image } = req.body;
+  let { name, discription, quantity, importPrice, sellPrice, categories, image } = req.body;
   db.execute("SELECT * FROM tbl_product WHERE id=?", [id])
     .then((data) => {
       let [rows] = data;
@@ -80,8 +84,8 @@ module.exports.updateProduct = (req, res) => {
         return Promise.reject("Name product not found");
       } else {
         db.execute(
-          "UPDATE tbl_product SET name=?, discription=?, quantity=?, price=?, categories=?, image=? WHERE id=?",
-          [name, discription, quantity, price, categories,image, id]
+          "UPDATE tbl_product SET name=?, discription=?, quantity=?, importPrice=?, sellPrice=?, categories=?, image=? WHERE id=?",
+          [name, discription, quantity, importPrice, sellPrice, categories,image, id]
         );
       }
     })
