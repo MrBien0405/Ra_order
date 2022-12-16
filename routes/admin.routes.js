@@ -3,4 +3,4 @@ const authController = require("../controllers/auth.controller")
 const db = require("../models/db")
 const router = express.Router()
 
-router.delete("/admin", authController.deleteAdmin)
+router.delete("/", authController.deleteAdmin)

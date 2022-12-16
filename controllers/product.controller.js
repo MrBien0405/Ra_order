@@ -1,6 +1,5 @@
 const db = require("../models/db");
 
-
 module.exports.getAllProduct = (req, res) => {
   db.execute("SELECT * FROM tbl_product")
     .then((data) => {
@@ -21,9 +20,9 @@ module.exports.getAllIdProduct = (req, res) => {
   db.execute("SELECT * FROM tbl_product WHERE id=?", [id])
     .then((data) => {
       let [rows] = data;
-
       res.status(200).json({
         data: rows,
+        data1: "aa",
       });
     })
     .catch((err) => {
@@ -34,11 +33,28 @@ module.exports.getAllIdProduct = (req, res) => {
 };
 
 module.exports.createProduct = (req, res) => {
-  let { name, discription, quantity, importPrice, sellPrice, categories, image } = req.body;
+  let {
+    name,
+    discription,
+    quantity,
+    importPrice,
+    sellPrice,
+    categories,
+    image,
+  } = req.body;
   let id = Math.floor(Math.random() * 999999);
-  if (!name || !discription || !quantity || !importPrice || !sellPrice || !categories || !image) {
+  if (
+    !name ||
+    !discription ||
+    !quantity ||
+    !importPrice ||
+    !sellPrice ||
+    !categories ||
+    !image
+  ) {
     res.status(500).json({
-      message: "Invail name or discription or quantity or importPrice or sellPrice or categories or image",
+      message:
+        "Invail name or discription or quantity or importPrice or sellPrice or categories or image",
     });
   }
   db.execute("SELECT * FROM tbl_product WHERE name=?", [name])
@@ -55,7 +71,7 @@ module.exports.createProduct = (req, res) => {
           importPrice,
           sellPrice,
           categories,
-          image
+          image,
         ]);
       }
     })
@@ -71,12 +87,17 @@ module.exports.createProduct = (req, res) => {
     });
 };
 
-
-
-
 module.exports.updateProduct = (req, res) => {
   let { id } = req.params;
-  let { name, discription, quantity, importPrice, sellPrice, categories, image } = req.body;
+  let {
+    name,
+    discription,
+    quantity,
+    importPrice,
+    sellPrice,
+    categories,
+    image,
+  } = req.body;
   db.execute("SELECT * FROM tbl_product WHERE id=?", [id])
     .then((data) => {
       let [rows] = data;
@@ -85,7 +106,16 @@ module.exports.updateProduct = (req, res) => {
       } else {
         db.execute(
           "UPDATE tbl_product SET name=?, discription=?, quantity=?, importPrice=?, sellPrice=?, categories=?, image=? WHERE id=?",
-          [name, discription, quantity, importPrice, sellPrice, categories,image, id]
+          [
+            name,
+            discription,
+            quantity,
+            importPrice,
+            sellPrice,
+            categories,
+            image,
+            id,
+          ]
         );
       }
     })
@@ -109,12 +139,31 @@ module.exports.deleteProduct = (req, res) => {
       if (rows.length === 0) {
         return Promise.reject("Name product no found");
       } else {
-        db.execute("DELETE from tbl_product WHERE id=?", [id]);
+        db.execute("DELETE FROM tbl_product WHERE id=?", [id]);
       }
     })
     .then((data) => {
       res.status(200).json({
         message: "Delete one successfully",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
+    });
+};
+
+module.exports.getCategory = (req, res) => {
+  console.log(req.query);
+  let categories = req.query.category;
+  console.log(categories);
+  db.execute("SELECT * FROM tbl_product WHERE categories=?", [categories])
+    .then((data) => {
+      let [rows] = data;
+      console.log(rows);
+      res.status(200).json({
+        data: rows,
       });
     })
     .catch((err) => {
