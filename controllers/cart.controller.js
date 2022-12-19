@@ -1,6 +1,7 @@
 const db = require("../models/db");
 
 module.exports.createCart = (req, res) => {
+  console.log("a");
   let id = Math.floor(Math.random() * 999999);
   console.log(id);
   let { userId } = req.signedCookies;
