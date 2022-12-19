@@ -31,15 +31,10 @@ module.exports.register = (req, res) => {
             if (data[0].length > 0) {
               return res.status(500).json({ message: "Phone already exist" });
             } else {
-              db.execute("INSERT INTO tbl_users VALUES(?, ?, ?, ?, ?, ?, ?)", [
-                id,
-                name,
-                gmail,
-                phone,
-                classroom,
-                password,
-                "user",
-              ])
+              db.execute(
+                "INSERT INTO tbl_users VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+                [id, name, gmail, phone, classroom, password, "user", ""]
+              )
                 .then((data) => {
                   res.status(200).json({
                     message: "Create one successfully",
@@ -90,7 +85,7 @@ module.exports.login = (req, res) => {
           console.log("a");
           res.status(200).json({
             message: "Login succesfully",
-            cookie: { userId: find.id, role: find.role, name: find.name },
+            cookie: { userId: find.id, role: find.role, name: find.name,avatar:find.avatar },
           });
         }
       }
