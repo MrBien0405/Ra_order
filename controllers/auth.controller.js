@@ -7,8 +7,8 @@ let strongRegex = new RegExp(
 );
 
 module.exports.register = (req, res) => {
-  let { name, phone,classroom, gmail, password} = req.body;
-  if (!name || !gmail || !phone || !password ||!classroom) {
+  let { name, phone, classroom, gmail, password } = req.body;
+  if (!name || !gmail || !phone || !password || !classroom) {
     res.status(200).json({
       message: "Invail name or phone or gmail or password or classroom",
     });
@@ -62,10 +62,6 @@ module.exports.register = (req, res) => {
     });
 };
 
-
-
-
-
 module.exports.login = (req, res) => {
   let { gmail, password } = req.body;
   if (!gmail || !password) {
@@ -88,12 +84,12 @@ module.exports.login = (req, res) => {
             message: "Wrong password",
           });
         } else {
-          res.cookie("userId", find.id, { signed: true });
-          res.cookie("role", find.role, { signed: true });
-          res.cookie("name", find.name, {signed: true})
+          // res.cookie("userId", find.id, { signed: true });
+          // res.cookie("role", find.role, { signed: true });
+          // res.cookie("name", find.name, { signed: true });
           res.status(200).json({
             message: "Login succesfully",
-            cookie: req.signedCookies,
+            cookie: { userId: find.id, role: find.role, name: find.name },
           });
         }
       }
