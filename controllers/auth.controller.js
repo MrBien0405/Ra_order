@@ -87,6 +87,7 @@ module.exports.login = (req, res) => {
           // res.cookie("userId", find.id, { signed: true });
           // res.cookie("role", find.role, { signed: true });
           // res.cookie("name", find.name, { signed: true });
+          console.log("b");
           res.status(200).json({
             message: "Login succesfully",
             cookie: { userId: find.id, role: find.role, name: find.name },
