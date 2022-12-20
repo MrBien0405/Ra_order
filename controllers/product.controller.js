@@ -1,18 +1,34 @@
 const db = require("../models/db");
 
-module.exports.getAllProduct = (req, res) => {
-  db.execute("SELECT * FROM tbl_product")
-    .then((data) => {
-      let [rows] = data;
-      res.status(200).json({
-        data: rows,
+module.exports.getProduct = (req, res) => {
+  let category = req.query.category;
+  if (category === "") {
+    db.execute("SELECT * FROM tbl_product")
+      .then((data) => {
+        let [rows] = data;
+        res.status(200).json({
+          data: rows,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
       });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: err,
+  } else {
+    db.execute("SELECT * FROM tbl_product WHERE categories = ?", [category])
+      .then((data) => {
+        let [rows] = data;
+        res.status(200).json({
+          data: rows,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
       });
-    });
+  }
 };
 
 module.exports.getAllIdProduct = (req, res) => {
@@ -154,7 +170,7 @@ module.exports.deleteProduct = (req, res) => {
     });
 };
 
-module.exports.getCategory = (req, res) => {
+module.exports.getSearchProduct = (req, res) => {
   console.log(req.query);
   let categories = req.query.category;
   console.log(categories);

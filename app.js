@@ -12,7 +12,7 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const adminRoutes = require("./routes/auth.routes");
-const cartRoutes = require("./routes/cart.routes")
+const cartRoutes = require("./routes/cart.routes");
 
 // setup view engine
 app.set("view engine", "ejs");
@@ -41,7 +41,7 @@ app.use("/product", productRoutes);
 
 app.use("/admin", adminRoutes);
 
-app.use("/cart", cartRoutes)
+app.use("/cart", cartRoutes);
 
 // Listen on port
 
