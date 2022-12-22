@@ -171,10 +171,9 @@ module.exports.deleteProduct = (req, res) => {
 };
 
 module.exports.getSearchProduct = (req, res) => {
-  console.log(req.query);
-  let categories = req.query.category;
-  console.log(categories);
-  db.execute("SELECT * FROM tbl_product WHERE categories=?", [categories])
+  let productName = req.query.productName;
+  console.log(productName);
+  db.execute("SELECT * FROM tbl_product WHERE name REGEXP ?", [productName])
     .then((data) => {
       let [rows] = data;
       console.log(rows);

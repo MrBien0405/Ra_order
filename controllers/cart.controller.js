@@ -58,3 +58,6 @@ module.exports.deleteUser = (req, res) => {
       });
     });
 };
+module.exports.updateCart = (req, res) => {
+  console.log(req.query);
+};

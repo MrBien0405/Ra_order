@@ -33,7 +33,16 @@ module.exports.register = (req, res) => {
             } else {
               db.execute(
                 "INSERT INTO tbl_users VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-                [id, name, gmail, phone, classroom, password, "user", ""]
+                [
+                  id,
+                  name,
+                  gmail,
+                  phone,
+                  classroom,
+                  password,
+                  "user",
+                  "https://img.freepik.com/free-icon/user_318-790139.jpg?w=2000",
+                ]
               )
                 .then((data) => {
                   res.status(200).json({
@@ -85,7 +94,12 @@ module.exports.login = (req, res) => {
           console.log("a");
           res.status(200).json({
             message: "Login succesfully",
-            cookie: { userId: find.id, role: find.role, name: find.name,avatar:find.avatar },
+            cookie: {
+              userId: find.id,
+              role: find.role,
+              name: find.name,
+              avatar: find.avatar,
+            },
           });
         }
       }
