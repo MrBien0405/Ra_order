@@ -4,3 +4,7 @@ const db = require("../models/db")
 const router = express.Router()
 
 router.delete("/", authController.deleteAdmin)
+
+
+
+

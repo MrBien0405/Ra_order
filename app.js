@@ -13,6 +13,8 @@ const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const adminRoutes = require("./routes/auth.routes");
 const cartRoutes = require("./routes/cart.routes");
+const favoriteRoutes = require("./routes/favorite.routes")
+
 
 // setup view engine
 app.set("view engine", "ejs");
@@ -43,8 +45,11 @@ app.use("/admin", adminRoutes);
 
 app.use("/cart", cartRoutes);
 
+app.use("/favorite", favoriteRoutes)
+
 // Listen on port
 
 app.listen(3000, () => {
-  console.log("server is runing on port http://127.0.0.1:3000");
+  console.log("server is runing on port http://localhost:3000");
 });
+

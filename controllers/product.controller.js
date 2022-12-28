@@ -33,19 +33,21 @@ module.exports.getProduct = (req, res) => {
 
 module.exports.getAllIdProduct = (req, res) => {
   let { id } = req.params;
-  db.execute("SELECT * FROM tbl_product WHERE id=?", [id])
-    .then((data) => {
-      let [rows] = data;
-      res.status(200).json({
-        data: rows,
-        data1: "aa",
+  if (id) {
+    db.execute("SELECT * FROM tbl_product WHERE id=?", [id])
+      .then((data) => {
+        let [rows] = data;
+        res.status(200).json({
+          data: rows,
+          data1: "aa",
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
       });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: err,
-      });
-    });
+  }
 };
 
 module.exports.createProduct = (req, res) => {
@@ -172,9 +174,15 @@ module.exports.deleteProduct = (req, res) => {
 
 module.exports.getSearchProduct = (req, res) => {
   let productName = req.query.productName;
-  console.log(productName);
+  if (!productName) {
+    return res.status(400).json({
+      data: "",
+    });
+  }
+  
+  // console.log(productName);
   db.execute("SELECT * FROM tbl_product WHERE name REGEXP ?", [productName])
-    .then((data) => {
+    .then((data) => { 
       let [rows] = data;
       console.log(rows);
       res.status(200).json({
