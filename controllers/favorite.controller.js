@@ -70,7 +70,7 @@ module.exports.getAllFavorite = (req, res) => {
 };
 
 module.exports.heartFavorite = (req, res) => {
-  let userID3 = 170584;
+  let userID3 = req.params.id;
   db.execute("SELECT productID3 FROM tbl_wishlist WHERE userID3=?", [userID3])
     .then((data) => {
       let [rows] = data;

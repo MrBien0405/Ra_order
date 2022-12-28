@@ -7,7 +7,7 @@ router.post("/", favoriteController.createFavorite)
 
 router.get("/", favoriteController.getAllFavorite)
 
-router.get("/heart/", favoriteController.heartFavorite)
+router.get("/heart/:id", favoriteController.heartFavorite)
 
 router.delete("/heart",favoriteController.deleteHeartFavoutite )
 module.exports = router;
