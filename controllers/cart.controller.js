@@ -71,7 +71,6 @@ module.exports.deleteCartById = (req, res) => {
 
 module.exports.deleteUser = (req, res) => {
   let userId = req.query.userId;
-  console.log(userId);
   db.execute("DELETE FROM tbl_cart WHERE userID2=?", [userId])
     .then((data) => {
       res.status(200).json({
@@ -95,7 +94,6 @@ module.exports.SaleCartBy = (req, res) => {
         data: rows,
       });
     })
-
     .catch((err) => {
       res.status(500).json({
         message: err,
@@ -181,7 +179,6 @@ module.exports.TopCard = (req, res) => {
 module.exports.updateTopCard = (req, res) => {
   let { id } = req.params;
   let { name, salePerMonth, image } = req.body;
-  console.log("à");
   db.execute("SELECT * FROM tbl_toprated WHERE id=?", [id])
     .then((data) => {
       let [rows] = data;

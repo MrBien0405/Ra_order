@@ -174,17 +174,15 @@ module.exports.deleteProduct = (req, res) => {
 
 module.exports.getSearchProduct = (req, res) => {
   let productName = req.query.productName;
+  console.log(req.query);
   if (!productName) {
     return res.status(400).json({
-      data: "",
+      data: [],
     });
   }
-  
-  // console.log(productName);
   db.execute("SELECT * FROM tbl_product WHERE name REGEXP ?", [productName])
-    .then((data) => { 
+    .then((data) => {
       let [rows] = data;
-      console.log(rows);
       res.status(200).json({
         data: rows,
       });
