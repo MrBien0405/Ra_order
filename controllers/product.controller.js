@@ -171,13 +171,12 @@ module.exports.deleteProduct = (req, res) => {
       });
     });
 };
-
 module.exports.getSearchProduct = (req, res) => {
   let productName = req.query.productName;
-  console.log(req.query);
+  console.log(productName);
   if (!productName) {
     return res.status(400).json({
-      data: [],
+      data: "",
     });
   }
   db.execute("SELECT * FROM tbl_product WHERE name LIKE ? ", [
@@ -185,6 +184,7 @@ module.exports.getSearchProduct = (req, res) => {
   ])
     .then((data) => {
       let [rows] = data;
+      console.log(rows);
       res.status(200).json({
         data: rows,
       });
@@ -195,3 +195,4 @@ module.exports.getSearchProduct = (req, res) => {
       });
     });
 };
+
