@@ -180,7 +180,9 @@ module.exports.getSearchProduct = (req, res) => {
       data: [],
     });
   }
-  db.execute("SELECT * FROM tbl_product WHERE name REGEXP ?", [productName])
+  db.execute("SELECT * FROM tbl_product WHERE name LIKE ? ", [
+    `%${productName}%`,
+  ])
     .then((data) => {
       let [rows] = data;
       res.status(200).json({

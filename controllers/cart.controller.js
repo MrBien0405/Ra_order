@@ -68,7 +68,23 @@ module.exports.deleteCartById = (req, res) => {
       });
     });
 };
-
+module.exports.updateCartQuantity = (req, res) => {
+  let { userId, productId, quantityValue } = req.body;
+  db.execute(
+    "UPDATE tbl_cart SET cartQuantity = ? WHERE userID2 = ? AND productID2 = ?",
+    [quantityValue, userId, productId]
+  )
+    .then((data) => {
+      res.status(200).json({
+        message: "update oke",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
+    });
+};
 module.exports.deleteUser = (req, res) => {
   let userId = req.query.userId;
   db.execute("DELETE FROM tbl_cart WHERE userID2=?", [userId])
