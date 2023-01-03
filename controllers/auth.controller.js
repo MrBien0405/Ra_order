@@ -110,3 +110,41 @@ module.exports.login = (req, res) => {
       });
     });
 };
+
+module.exports.UpdataUserProfile = (req, res) => {
+  let { id } = req.params;
+  let { name, gmail, phone } = req.body;
+  db.execute("UPDATE tbl_users SET name=?, gmail=?, phone=? WHERE id=?", [
+    name,
+    gmail,
+    phone,
+    id,
+  ])
+    .then((data) => {
+      res.status(200).json({
+        message: "Update one successfully",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
+    });
+};
+
+
+module.exports.getAllUserProfile=(req, res)=>{
+  let {id}= req.params
+  db.execute("SELECT * FROM tbl_users WHERE id=?", [id])
+  .then((data)=>{
+    let [rows]= data
+    res.status(200).json({
+      data: rows
+    })
+  })
+  .catch((err)=>{
+    res.status(500).json({
+      message: err
+    })
+  })
+}

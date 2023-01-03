@@ -171,18 +171,20 @@ module.exports.deleteProduct = (req, res) => {
       });
     });
 };
-
 module.exports.getSearchProduct = (req, res) => {
   let productName = req.query.productName;
-  console.log(req.query);
+  console.log(productName);
   if (!productName) {
     return res.status(400).json({
-      data: [],
+      data: "",
     });
   }
-  db.execute("SELECT * FROM tbl_product WHERE name REGEXP ?", [productName])
-    .then((data) => {
+  // db.execute(`SELECT * FROM tbl_product WHERE MATCH (name) AGAINST ("${productName}" WITH QUERY EXPANSION)`,[productName])
+  db.execute(`SELECT * FROM tbl_product WHERE name LIKE "%${productName}%"`, [productName])
+  // db.execute("SELECT * FROM tbl_product WHERE name REGEXP ?",[productName])
+    .then((data) => { 
       let [rows] = data;
+      console.log(rows);
       res.status(200).json({
         data: rows,
       });
@@ -193,3 +195,4 @@ module.exports.getSearchProduct = (req, res) => {
       });
     });
 };
+

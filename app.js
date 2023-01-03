@@ -15,7 +15,7 @@ const adminRoutes = require("./routes/auth.routes");
 const cartRoutes = require("./routes/cart.routes");
 const favoriteRoutes = require("./routes/favorite.routes");
 const historyRoutes = require("./routes/history.routes");
-
+const reviewRoutes = require("./routes/review.routes")
 // setup view engine
 app.set("view engine", "ejs");
 app.set("views", `${__dirname}/views`);
@@ -43,10 +43,18 @@ app.use("/history", historyRoutes);
 // admin
 
 app.use("/admin", adminRoutes);
-
+// cart
 app.use("/cart", cartRoutes);
 
+// favorite
 app.use("/favorite", favoriteRoutes);
+
+// reviews
+
+app.use("/review", reviewRoutes)
+
+
+
 
 // Listen on port
 
