@@ -37,7 +37,7 @@ module.exports.register = (req, res) => {
                 phone,
                 password,
                 "user",
-                "https://img.freepik.com/free-icon/user_318-790139.jpg?w=2000",
+                "https://kynguyenlamdep.com/wp-content/uploads/2022/06/avatar-cute-vui-nhon.jpg",
               ])
                 .then((data) => {
                   res.status(200).json({

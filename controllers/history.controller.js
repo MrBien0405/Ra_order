@@ -1,7 +1,9 @@
 const db = require("../models/db");
 module.exports.getAllHistoryPurchase = (req, res) => {
+  let { id } = req.params;
   db.execute(
-    "SELECT name,image,productID1,sell_price,date,time,buy_quantity FROM tbl_product t1 INNER JOIN tbl_purchase_history t2 ON t1.id = t2.productID1 ORDER BY date,time DESC"
+    "SELECT t1.name,t1.image,t2.productID1,t2.sell_price,t2.date,t2.time,t2.buy_quantity FROM tbl_product t1 INNER JOIN tbl_purchase_history t2 ON t1.id = t2.productID1 WHERE t2.userID1 = ? ORDER BY date,time DESC ",
+    [id]
   ).then((data) => {
     res.status(200).json({
       data: data[0],
