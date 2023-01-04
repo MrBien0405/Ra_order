@@ -1,5 +1,4 @@
 const db = require("../models/db");
-
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 let strongRegex = new RegExp(
@@ -7,10 +6,10 @@ let strongRegex = new RegExp(
 );
 
 module.exports.register = (req, res) => {
-  let { name, phone, classroom, gmail, password } = req.body;
-  if (!name || !gmail || !phone || !password || !classroom) {
+  let { name, phone, gmail, password } = req.body;
+  if (!name || !gmail || !phone || !password) {
     res.status(200).json({
-      message: "Invail name or phone or gmail or password or classroom",
+      message: "Invail name or phone or gmail or password ",
     });
   }
   if (!strongRegex.test(password)) {
@@ -31,19 +30,15 @@ module.exports.register = (req, res) => {
             if (data[0].length > 0) {
               return res.status(500).json({ message: "Phone already exist" });
             } else {
-              db.execute(
-                "INSERT INTO tbl_users VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-                [
-                  id,
-                  name,
-                  gmail,
-                  phone,
-                  classroom,
-                  password,
-                  "user",
-                  "https://img.freepik.com/free-icon/user_318-790139.jpg?w=2000",
-                ]
-              )
+              db.execute("INSERT INTO tbl_users VALUES(?, ?, ?, ?, ?, ?, ?)", [
+                id,
+                name,
+                gmail,
+                phone,
+                password,
+                "user",
+                "https://img.freepik.com/free-icon/user_318-790139.jpg?w=2000",
+              ])
                 .then((data) => {
                   res.status(200).json({
                     message: "Create one successfully",
@@ -113,11 +108,11 @@ module.exports.login = (req, res) => {
 
 module.exports.UpdataUserProfile = (req, res) => {
   let { id } = req.params;
-  let { name, gmail, phone } = req.body;
-  db.execute("UPDATE tbl_users SET name=?, gmail=?, phone=? WHERE id=?", [
+  let { name, avatar } = req.body;
+
+  db.execute("UPDATE tbl_users SET name=?, avatar=? WHERE id=?", [
     name,
-    gmail,
-    phone,
+    avatar,
     id,
   ])
     .then((data) => {
@@ -132,19 +127,18 @@ module.exports.UpdataUserProfile = (req, res) => {
     });
 };
 
-
-module.exports.getAllUserProfile=(req, res)=>{
-  let {id}= req.params
+module.exports.getAllUserProfile = (req, res) => {
+  let { id } = req.params;
   db.execute("SELECT * FROM tbl_users WHERE id=?", [id])
-  .then((data)=>{
-    let [rows]= data
-    res.status(200).json({
-      data: rows
+    .then((data) => {
+      let [rows] = data;
+      res.status(200).json({
+        data: rows,
+      });
     })
-  })
-  .catch((err)=>{
-    res.status(500).json({
-      message: err
-    })
-  })
-}
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
+    });
+};
